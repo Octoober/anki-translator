@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Логи и данные
+*.log
+translation_progress.json
+
+# IDE
+.vscode/
+.idea/
