@@ -29,4 +29,5 @@ git clone https://github.com/ваш-логин/anki-translator.git
 pip install -r requirements.txt
 ```
 
-Я протестировал этот скрипт на 6352 карточках WaniKani `Ultimate::Vocabulary` без каких либо ошибок.
+Я протестировал этот скрипт на 6352 карточках `WaniKani Ultimate::Vocabulary` без каких либо ошибок.
+В идеале добавить сохранение ID карточек, которые не удалось перевести и запуск скрипта по неудачным ID.
