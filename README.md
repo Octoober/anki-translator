@@ -9,7 +9,7 @@
 - **Гибкая настройка** через `config.json`
 - Поддержка **вложенных колод** (например, `"deck_name": "Wanikani Ultimate::Vocabulary"`)
 - **Без жестких лимитов** благодаря библиотеке [deep-translator](https://github.com/nidhaloff/deep-translator)
-- Прогресс сохранаяется в _translation_progress.json_. В случае останвки скрипта, перевод продолжится с последней карточки
+- Прогресс сохраняется в _translation_progress.json_. В случае остановки скрипта, перевод продолжится с последней карточки
 
 ---
 
