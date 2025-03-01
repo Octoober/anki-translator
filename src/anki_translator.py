@@ -14,6 +14,9 @@ logging.basicConfig(
     handlers=[logging.FileHandler("translation.log"), logging.StreamHandler()],
 )
 
+PROGRESS_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "translation_progress.json"
+)
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), "..", "config.json")
 CONFIG = None
 
@@ -35,7 +38,6 @@ def load_config() -> dict:
             "target_field",
             "source_lang",
             "target_lang",
-            "progress_file",
             "request_delay",
             "max_retries",
         ]
@@ -85,11 +87,11 @@ def get_all_note_ids() -> List[int]:
 
 def load_progress() -> Optional[int]:
     """Загружает последний обработанный ID из файла"""
-    if not os.path.exists(CONFIG["progress_file"]):
+    if not os.path.exists(PROGRESS_PATH):
         return None
 
     try:
-        with open(CONFIG["progress_file"], "r") as f:
+        with open(PROGRESS_PATH, "r") as f:
             return json.load(f).get("last_id")
     except Exception as e:
         logging.error(f"Failed to load progress: {str(e)}")
@@ -99,7 +101,7 @@ def load_progress() -> Optional[int]:
 def save_progress(note_id: int) -> None:
     """Сохраняет текущий прогресс в файл"""
     try:
-        with open(CONFIG["progress_file"], "w") as f:
+        with open(PROGRESS_PATH, "w") as f:
             json.dump({"last_id": note_id}, f)
     except Exception as e:
         logging.error(f"Failed to save progress: {str(e)}")

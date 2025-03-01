@@ -5,6 +5,5 @@
   "source_lang": "en",
   "target_lang": "ru",
   "request_delay": 1,
-  "max_retries": 3,
-  "progress_file": "translation_progress.json"
+  "max_retries": 3
 }
