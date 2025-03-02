@@ -1,7 +1,10 @@
 {
   "anki_connect_url": "http://localhost:8765",
-  "deck_name": "Kanji",
-  "target_field": "Meaning",
+  "deck_name": "Dictionaries of Japanese Grammar Sentences::3 - Advanced",
+  "target_fields": [
+    "English",
+    "Explanation"
+  ],
   "source_lang": "en",
   "target_lang": "ru",
   "request_delay": 1,

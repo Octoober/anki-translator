@@ -35,7 +35,7 @@ def load_config() -> dict:
         required_fields = [
             "anki_connect_url",
             "deck_name",
-            "target_field",
+            "target_fields",
             "source_lang",
             "target_lang",
             "request_delay",
@@ -79,7 +79,8 @@ def invoke_anki(action: str, **params) -> Optional[dict]:
 
 def get_all_note_ids() -> List[int]:
     """Возвращает отсортированный список всех ID карточек в колоде"""
-    query = f'deck:"{CONFIG['deck_name']}" {CONFIG['target_field']}:*'
+    fields_query = " OR ".join([f"{field}:*" for field in CONFIG["target_fields"]])
+    query = f'deck:"{CONFIG['deck_name']}", ({fields_query})'
     notes_ids = invoke_anki("findNotes", query=query)
 
     return sorted(map(int, notes_ids))
@@ -128,15 +129,24 @@ def process_note(note_id: int) -> bool:
     """Обрабатывает одну карточку"""
     try:
         note_info = invoke_anki("notesInfo", notes=[note_id])[0]
-        original = note_info["fields"].get(CONFIG["target_field"], {}).get("value", "")
+        fields = note_info["fields"]
+        # original = note_info["fields"].get(CONFIG["target_field"], {}).get("value", "")
+        updates = {}
 
-        if not original.strip():
-            logging.debug(f"Skipping empty field in note {note_id}")
-            return True
+        for field in CONFIG["target_fields"]:
+            original = fields.get(field, {}).get("value", "")
+            if original.strip():
+                translated = translate_text(original)
+                updates[field] = translated
+        if updates:
+            invoke_anki("updateNoteFields", note={"id": note_id, "fields": updates})
+        # if not original.strip():
+        #     logging.debug(f"Skipping empty field in note {note_id}")
+        #     return True
 
-        translated = translate_text(original)
-        query = {"id": note_id, "fields": {CONFIG["target_field"]: translated}}
-        invoke_anki("updateNoteFields", note=query)
+        # translated = translate_text(original)
+        # query = {"id": note_id, "fields": {CONFIG["target_field"]: translated}}
+        # invoke_anki("updateNoteFields", note=query)
 
         return True
     except Exception as e:
