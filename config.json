@@ -1,12 +1,14 @@
 {
   "anki_connect_url": "http://localhost:8765",
-  "deck_name": "Dictionaries of Japanese Grammar Sentences::3 - Advanced",
+  "deck_name": "Kanji::WaniKani Ultimate::Vocabulary",
   "target_fields": [
-    "English",
-    "Explanation"
+    "Vocab_Meaning"
   ],
-  "source_lang": "en",
-  "target_lang": "ru",
+  "source_lang": "ru",
+  "target_lang": "en",
   "request_delay": 1,
-  "max_retries": 3
+  "max_retries": 3,
+  "translation_service": {
+    "service": "google"
+  }
 }
